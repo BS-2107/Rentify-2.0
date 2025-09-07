@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Rentify Token Extractor</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>🔑 Rentify Token Extractor</h1>
+      <p class="subtitle">Extract and manage session tokens</p>
+    </header>
+    
+    <main class="main">
+      <!-- Current Page Info -->
+      <section class="page-info">
+        <h3>Current Page</h3>
+        <div class="info-item">
+          <span class="label">Domain:</span>
+          <span class="value" id="currentDomain">Loading...</span>
+        </div>
+        <div class="info-item">
+          <span class="label">URL:</span>
+          <span class="value" id="currentUrl">Loading...</span>
+        </div>
+      </section>
+      
+      <!-- Action Buttons -->
+      <section class="actions">
+        <button id="extractBtn" class="btn btn-primary">
+          🔍 Extract Tokens
+        </button>
+        <button id="viewTokensBtn" class="btn btn-secondary">
+          👁️ View Saved Tokens
+        </button>
+        <button id="clearTokensBtn" class="btn btn-danger">
+          🗑️ Clear All Tokens
+        </button>
+      </section>
+      
+      <!-- Status Display -->
+      <section class="status">
+        <div id="statusMessage" class="status-message"></div>
+        <div id="tokenCount" class="token-count"></div>
+        <div id="mongoStatus" class="mongo-status">
+          <span class="status-indicator" id="mongoIndicator">⚪</span>
+          <span id="mongoStatusText">Checking MongoDB connection...</span>
+        </div>
+      </section>
+      
+      <!-- Saved Tokens List -->
+      <section class="tokens-list" id="tokensList" style="display: none;">
+        <h3>Saved Tokens</h3>
+        <div id="tokensContainer" class="tokens-container">
+          <!-- Tokens will be populated here -->
+        </div>
+      </section>
+    </main>
+    
+    <footer class="footer">
+      <small>Rentify Session Token Extractor v1.0</small>
+    </footer>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

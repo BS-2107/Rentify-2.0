@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Rentify Session Token Extractor",
+  "version": "1.0.0",
+  "description": "Extract and save session tokens for software rental",
+  
+  "permissions": [
+    "activeTab",
+    "storage",
+    "cookies",
+    "scripting"
+  ],
+  
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*",
+    "https://data.mongodb-api.com/*",
+    "https://api.rentify.com/*"
+  ],
+  
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["src/content.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "Rentify Token Extractor"
+  },
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["src/storage/storage.js", "src/mongodb-client.js"],
+      "matches": ["https://*/*", "http://*/*"]
+    }
+  ]
+}

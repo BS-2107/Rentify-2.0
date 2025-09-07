@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Extractor Test Page</title>
+    <meta name="auth-token" content="test-meta-token-12345">
+    <meta name="session-id" content="sess_abc123">
+</head>
+<body>
+    <h1>🔧 Rentify Token Extractor Test Page</h1>
+    <p>This page contains various types of tokens for testing the extension.</p>
+    
+    <div id="results">
+        <h2>Test Results:</h2>
+        <div id="status">Click the extension icon and extract tokens to test.</div>
+    </div>
+
+    <script>
+        // Set some test data in storage
+        localStorage.setItem('access_token', 'local_token_abc123');
+        localStorage.setItem('user_session', 'user_sess_xyz789');
+        localStorage.setItem('api_key', 'api_key_test_456');
+        
+        sessionStorage.setItem('temp_token', 'temp_abc123');
+        sessionStorage.setItem('csrf_token', 'csrf_xyz789');
+        
+        // Set some cookies
+        document.cookie = "auth_token=cookie_token_123; path=/";
+        document.cookie = "session_id=cookie_sess_456; path=/";
+        document.cookie = "user_pref=test_value; path=/";
+        
+        // Create some token variables that should be detected
+        const accessToken = "js_access_token_789";
+        const authToken = "js_auth_token_456";
+        const apiKey = "js_api_key_123";
+        
+        // Test configuration object
+        const config = {
+            token: "config_token_999",
+            sessionId: "config_session_888",
+            jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test",
+            bearer: "bearer_token_777"
+        };
+        
+        // Display current page info
+        document.getElementById('status').innerHTML = `
+            <strong>Domain:</strong> ${window.location.hostname}<br>
+            <strong>URL:</strong> ${window.location.href}<br>
+            <strong>Cookies:</strong> ${document.cookie.split(';').length} found<br>
+            <strong>LocalStorage:</strong> ${localStorage.length} items<br>
+            <strong>SessionStorage:</strong> ${sessionStorage.length} items<br>
+            <strong>Test Tokens:</strong> Multiple JS tokens embedded<br>
+            <em>Use the extension to extract all this data!</em>
+        `;
+        
+        console.log('Test tokens ready for extraction:', {
+            accessToken,
+            authToken,
+            apiKey,
+            config
+        });
+    </script>
+</body>
+</html>

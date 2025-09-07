@@ -2,8 +2,6 @@
 
 import React, { useState } from 'react';
 import { Header } from '../../../components/layout/Header';
-import { Footer } from '../../../components/layout/Footer';
-import { Button } from '../../../components/ui/Button';
 
 export default function ListAccountPage() {
   const [formData, setFormData] = useState({
@@ -54,7 +52,7 @@ export default function ListAccountPage() {
     'Enterprise Account'
   ];
 
-  const handleInputChange = (field: string, value: any) => {
+  const handleInputChange = (field: string, value: string | number | boolean) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -511,8 +509,6 @@ export default function ListAccountPage() {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   );
 }

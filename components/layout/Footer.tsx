@@ -34,7 +34,7 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">How It Works</a></li>
+              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Rent-ify Process</a></li>
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">Security</a></li>
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">Pricing</a></li>
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">Support</a></li>

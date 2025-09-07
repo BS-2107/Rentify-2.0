@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from './Button';
 
 interface Tool {
   name: string;
@@ -82,8 +81,8 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Enhanced Tool Header */}
-      <div className="relative h-36 bg-gradient-to-br from-accent/5 via-white to-secondary/10 p-6 flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent group-hover:from-accent/10 transition-all duration-500"></div>
+      <div className="relative h-36 bg-gradient-to-br from-gray-700/95 via-gray-600 to-gray-700/90 p-6 flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-600/20 to-transparent group-hover:from-accent/10 transition-all duration-500"></div>
         <div className="absolute inset-0 bg-pattern opacity-30"></div>
         <img 
           src={getToolLogo(tool.name)} 
@@ -92,7 +91,10 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
           onError={(e) => {
             // Fallback to a default icon if image fails to load
             e.currentTarget.style.display = 'none';
-            e.currentTarget.nextElementSibling!.style.display = 'block';
+            const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
+            if (nextElement) {
+              nextElement.style.display = 'block';
+            }
           }}
         />
         <div className="text-4xl mb-2 relative z-10 floating-animation hidden group-hover:scale-110 transition-transform">
@@ -115,8 +117,8 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
       {/* Tool Info */}
       <div className="p-6">
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-dark mb-1 truncate">{tool.name}</h3>
-          <p className="text-sm text-dark/60">{tool.category}</p>
+          <h3 className="text-lg font-semibold text-gray-100 mb-1 truncate">{tool.name}</h3>
+          <p className="text-sm text-gray-400">{tool.category}</p>
         </div>
 
         {/* Stats */}
@@ -126,9 +128,9 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
               <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
                 <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
               </svg>
-              <span className="text-sm font-medium text-dark ml-1">{tool.rating}</span>
+              <span className="text-sm font-medium text-gray-200 ml-1">{tool.rating}</span>
             </div>
-            <span className="text-sm text-dark/60">({tool.users} users)</span>
+            <span className="text-sm text-gray-400">({tool.users} users)</span>
           </div>
           <div className="text-right">
             <div className="text-lg font-bold text-accent">{tool.price}</div>
@@ -139,7 +141,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
         {tool.available ? (
           <a href={`/rent/${encodeURIComponent(tool.name)}`}>
             <button className="btn-primary w-full flex items-center justify-center gap-2 group">
-              <span>Rent Now</span>
+              <span>Rent-ify Now</span>
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
@@ -147,23 +149,23 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
           </a>
         ) : (
           <button className="btn-secondary w-full opacity-50 cursor-not-allowed" disabled>
-            Notify When Available
+            Notify-ify When Available
           </button>
         )}
 
         {/* Quick Info */}
         {isHovered && tool.available && (
-          <div className="mt-4 p-4 bg-gradient-to-r from-primary/30 to-secondary/30 backdrop-blur-sm rounded-xl border border-white/20">
+          <div className="mt-4 p-4 bg-gradient-to-r from-gray-600/90 to-gray-700/30 backdrop-blur-sm rounded-xl border border-accent/20">
             <div className="flex justify-between text-sm items-center">
-              <span className="text-dark/70">Instant Access</span>
+              <span className="text-gray-300">Instant Access</span>
               <span className="text-green-500 font-bold text-lg">✓</span>
             </div>
             <div className="flex justify-between text-sm mt-2 items-center">
-              <span className="text-dark/70">24/7 Support</span>
+              <span className="text-gray-300">24/7 Support</span>
               <span className="text-green-500 font-bold text-lg">✓</span>
             </div>
             <div className="flex justify-between text-sm mt-2 items-center">
-              <span className="text-dark/70">Money Back Guarantee</span>
+              <span className="text-gray-300">Money Back Guarantee</span>
               <span className="text-green-500 font-bold text-lg">✓</span>
             </div>
           </div>

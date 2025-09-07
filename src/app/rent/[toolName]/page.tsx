@@ -1,27 +1,26 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, use } from 'react';
+import Link from 'next/link';
 import { Header } from '../../../../components/layout/Header';
-import { Footer } from '../../../../components/layout/Footer';
 import { Button } from '../../../../components/ui/Button';
 import { PayPalButton } from '../../../../components/ui/PayPalButton';
 import { useCart } from '../../../../lib/CartContext';
 
 interface RentPageProps {
-  params: {
+  params: Promise<{
     toolName: string;
-  };
+  }>;
 }
 
 export default function RentPage({ params }: RentPageProps) {
+  const resolvedParams = use(params);
   const [selectedDuration, setSelectedDuration] = useState('1');
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
-  
+
   // Decode the tool name from URL
-  const toolName = decodeURIComponent(params.toolName);
-  
-  // Mock tool data - in real app this would come from API
+  const toolName = decodeURIComponent(resolvedParams.toolName);  // Mock tool data - in real app this would come from API
   const toolData = {
     name: toolName,
     price: 59,
@@ -66,9 +65,9 @@ export default function RentPage({ params }: RentPageProps) {
             {/* Breadcrumb */}
             <div className="mb-8">
               <nav className="text-sm">
-                <a href="/" className="text-dark/60 hover:text-dark">Home</a>
+                <Link href="/" className="text-dark/60 hover:text-dark">Home</Link>
                 <span className="mx-2 text-dark/40">/</span>
-                <a href="/browse" className="text-dark/60 hover:text-dark">Browse</a>
+                <Link href="/browse" className="text-dark/60 hover:text-dark">Browse</Link>
                 <span className="mx-2 text-dark/40">/</span>
                 <span className="text-dark font-medium">{toolData.name}</span>
               </nav>
@@ -239,12 +238,23 @@ export default function RentPage({ params }: RentPageProps) {
                       </h3>
                       <PayPalButton 
                         amount={finalPrice * quantity}
-                        onSuccess={() => {
-                          alert(`Successfully rented ${quantity}x ${toolData.name} (${selectedDurationData?.label})! Access details will be sent to your email.`);
+                        toolName={toolData.name}
+                        quantity={quantity}
+                        duration={selectedDurationData?.label || '1 month'}
+                        onSuccess={(paymentData) => {
+                          alert(`Successfully rented ${quantity}x ${toolData.name} (${selectedDurationData?.label})! Payment ID: ${paymentData?.id}. Access details will be sent to your email.`);
                         }}
                         onError={(error) => {
                           console.error('PayPal payment error:', error);
-                          alert('Payment failed. Please try again or add to cart.');
+                          let errorMessage = 'Payment failed. Please try again or add to cart.';
+                          
+                          if (error instanceof Error) {
+                            errorMessage = `Payment failed: ${error.message}`;
+                          } else if (typeof error === 'string') {
+                            errorMessage = `Payment failed: ${error}`;
+                          }
+                          
+                          alert(errorMessage);
                         }}
                       />
                     </div>
@@ -266,8 +276,6 @@ export default function RentPage({ params }: RentPageProps) {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   );
 }

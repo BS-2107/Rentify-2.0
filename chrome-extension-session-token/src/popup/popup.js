@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Get DOM elements
   const extractBtn = document.getElementById('extractBtn');
+  const createVMBtn = document.getElementById('createVMBtn');
   const viewTokensBtn = document.getElementById('viewTokensBtn');
   const clearTokensBtn = document.getElementById('clearTokensBtn');
   const statusMessage = document.getElementById('statusMessage');
@@ -390,8 +391,62 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
+  // Create VM Session with extracted tokens
+  async function createVMSession() {
+    try {
+      showStatus('🔄 Creating VM session...', 'info');
+      createVMBtn.disabled = true;
+      createVMBtn.innerHTML = '<span class="loading">⏳</span> Creating VM...';
+      
+      // Get latest tokens from current domain
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      const domain = new URL(tab.url).hostname;
+      
+      // Request background script to create VM session
+      const response = await chrome.runtime.sendMessage({ 
+        action: 'createVMSession',
+        domain: domain,
+        url: tab.url
+      });
+      
+      if (response.success) {
+        showStatus(`✅ VM Session Created! <a href="${response.vncUrl}" target="_blank" style="color: #28a745; text-decoration: underline;">Open VNC</a>`, 'success');
+        
+        // Show VNC link prominently
+        const vncLinkDiv = document.createElement('div');
+        vncLinkDiv.style.cssText = `
+          background: #d4edda;
+          border: 2px solid #28a745;
+          border-radius: 8px;
+          padding: 15px;
+          margin: 10px 0;
+          text-align: center;
+        `;
+        vncLinkDiv.innerHTML = `
+          <strong>🖥️ VM Session Ready!</strong><br>
+          <a href="${response.vncUrl}" target="_blank" style="color: #28a745; font-size: 16px; text-decoration: none; font-weight: bold;">
+            Click to Access VM
+          </a><br>
+          <small style="color: #666;">Session ID: ${response.sessionId}</small>
+        `;
+        
+        statusMessage.appendChild(vncLinkDiv);
+      } else {
+        showStatus(`❌ Failed to create VM session: ${response.error}`, 'error');
+      }
+      
+    } catch (error) {
+      console.error('Error creating VM session:', error);
+      showStatus(`❌ Error: ${error.message}`, 'error');
+    } finally {
+      createVMBtn.disabled = false;
+      createVMBtn.innerHTML = '🖥️ Create VM Session';
+    }
+  }
+
   // Event listeners
   extractBtn.addEventListener('click', extractTokens);
+  createVMBtn.addEventListener('click', createVMSession);
   viewTokensBtn.addEventListener('click', viewTokens);
   clearTokensBtn.addEventListener('click', clearAllTokens);
   

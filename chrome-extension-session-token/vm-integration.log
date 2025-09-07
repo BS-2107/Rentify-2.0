@@ -1,0 +1,26 @@
+🔗 VM Integration API running on port 3003
+🖥️ VM Server: http://57.153.184.55:3000
+📺 VNC Access: http://57.153.184.55:6080
+🧪 Test endpoint: http://localhost:3003/api/test-vm
+🚀 Creating VM session for: {
+  tokenId: undefined,
+  targetUrl: 'https://example.com/login',
+  domain: 'example.com',
+  tokenCount: 3,
+  cookieCount: 1
+}
+❌ Error creating VM session: Error: VM injection failed: 500
+    at /Users/sahaj/Desktop/Rentify-2.0/chrome-extension-session-token/vm-integration.js:45:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+🚀 Creating VM session for: {
+  tokenId: undefined,
+  targetUrl: 'https://example.com/login',
+  domain: 'example.com',
+  tokenCount: 3,
+  cookieCount: 1
+}
+✅ VM session created successfully: {
+  sessionId: 'session_1757229182783_1t96f9f4u',
+  vncUrl: 'http://57.153.184.55:6080/vnc.html?autoconnect=true&resize=scale',
+  targetUrl: 'https://example.com/login'
+}

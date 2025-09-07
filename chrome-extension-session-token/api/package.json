@@ -1,0 +1,23 @@
+{
+  "name": "rentify-token-api",
+  "version": "1.0.0",
+  "description": "MongoDB API for Rentify Session Token Extractor",
+  "main": "mongodb-api.js",
+  "scripts": {
+    "start": "node mongodb-api.js",
+    "dev": "nodemon mongodb-api.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "mongodb": "^6.0.0",
+    "express": "^4.18.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "keywords": ["rentify", "token-extractor", "mongodb", "api"],
+  "author": "Rentify Team",
+  "license": "MIT"
+}

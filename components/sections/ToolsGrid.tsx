@@ -3,6 +3,15 @@
 import React, { useRef } from 'react';
 import { ToolCard } from '../ui/ToolCard';
 
+interface Tool {
+  name: string;
+  price: string;
+  rating: number;
+  users: string;
+  category: string;
+  available: boolean;
+}
+
 export const ToolsGrid: React.FC = () => {
   const creativeRef = useRef<HTMLDivElement>(null);
   const aiRef = useRef<HTMLDivElement>(null);
@@ -11,7 +20,7 @@ export const ToolsGrid: React.FC = () => {
   const videoRef = useRef<HTMLDivElement>(null);
   const productivityRef = useRef<HTMLDivElement>(null);
 
-  const scroll = (ref: React.RefObject<HTMLDivElement>, direction: 'left' | 'right') => {
+  const scroll = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
     if (ref.current) {
       const scrollAmount = 320;
       ref.current.scrollBy({
@@ -93,26 +102,31 @@ export const ToolsGrid: React.FC = () => {
     scrollRef 
   }: { 
     title: string; 
-    tools: any[]; 
-    scrollRef: React.RefObject<HTMLDivElement>;
+    tools: Tool[]; 
+    scrollRef: React.RefObject<HTMLDivElement | null>;
   }) => (
-    <div className="mb-12">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-h2 text-dark">{title}</h2>
-        <div className="flex gap-2">
+    <div className="mb-16">
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center space-x-4">
+          <h2 className="text-h2 text-gray-100 font-black">{title}</h2>
+          <div className="px-4 py-2 bg-gradient-to-r from-accent/20 via-accent-light/20 to-accent-bright/20 rounded-full border border-accent/10">
+            <span className="text-sm font-bold text-accent">{tools.filter(t => t.available).length} available</span>
+          </div>
+        </div>
+        <div className="flex gap-3">
           <button
             onClick={() => scroll(scrollRef, 'left')}
-            className="p-2 bg-white/80 hover:bg-white rounded-full shadow-md transition-all duration-300 hover:shadow-lg"
+            className="p-3 modern-card group hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110"
           >
-            <svg className="w-5 h-5 text-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           <button
             onClick={() => scroll(scrollRef, 'right')}
-            className="p-2 bg-white/80 hover:bg-white rounded-full shadow-md transition-all duration-300 hover:shadow-lg"
+            className="p-3 modern-card group hover:bg-accent hover:text-white transition-all duration-300 hover:scale-110"
           >
-            <svg className="w-5 h-5 text-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
@@ -120,19 +134,26 @@ export const ToolsGrid: React.FC = () => {
       </div>
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto scrollbar-hide pb-4"
+        className="flex gap-6 overflow-x-auto scrollbar-hide pb-6"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {tools.map((tool, index) => (
-          <ToolCard key={index} tool={tool} />
+          <div key={index} className="slide-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+            <ToolCard tool={tool} />
+          </div>
         ))}
       </div>
     </div>
   );
 
   return (
-    <section className="py-12 bg-white">
-      <div className="container mx-auto px-4">
+    <section className="py-20 bg-gray-900 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent-light/5 rounded-full blur-3xl"></div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-bright/3 rounded-full blur-3xl"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-7xl mx-auto">
           <ToolSection title="🎨 Creative Software" tools={creativeTools} scrollRef={creativeRef} />
           <ToolSection title="🤖 AI Tools" tools={aiTools} scrollRef={aiRef} />

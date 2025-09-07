@@ -2,13 +2,12 @@
 
 import React, { useState } from 'react';
 import { Header } from '../../../components/layout/Header';
-import { Footer } from '../../../components/layout/Footer';
 import { Button } from '../../../components/ui/Button';
 import { PayPalButton } from '../../../components/ui/PayPalButton';
 import { useCart } from '../../../lib/CartContext';
 
 export default function CartPage() {
-  const { cartItems, updateQuantity, removeFromCart, getCartTotal } = useCart();
+  const { cartItems, updateQuantity, removeFromCart, clearCart, getCartTotal } = useCart();
   const [promoCode, setPromoCode] = useState('');
   const [promoDiscount, setPromoDiscount] = useState(0);
 
@@ -41,33 +40,32 @@ export default function CartPage() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-primary">
+      <div className="min-h-screen bg-gray-900">
         <Header />
         <main className="pt-24 pb-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <div className="modern-card p-12 text-center fade-in">
                 <div className="text-8xl mb-6 floating-animation">🛒</div>
-                <h1 className="text-4xl font-bold text-dark mb-4">Your Cart is Empty</h1>
-                <p className="text-dark/70 mb-8 text-lg">
-                  Looks like you haven't added any tools to your cart yet. Browse our collection of premium software!
+                <h1 className="text-4xl font-bold text-gray-100 mb-4">Your Cart is Empty</h1>
+                <p className="text-gray-300 mb-8 text-lg">
+                  Looks like you haven't added any tools to your cart yet. Browse-ify our collection of premium software!
                 </p>
                 <a href="/browse">
                   <button className="btn-primary px-8 py-4 text-lg font-bold">
-                    Browse Tools
+                    Browse-ify Tools
                   </button>
                 </a>
               </div>
             </div>
           </div>
         </main>
-        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-primary">
+    <div className="min-h-screen bg-gray-900">
       <Header />
 
       <main className="pt-24 pb-16">
@@ -76,8 +74,8 @@ export default function CartPage() {
 
             {/* Page Header */}
             <div className="mb-8">
-              <h1 className="text-4xl font-bold text-dark mb-2">Shopping Cart</h1>
-              <p className="text-dark/70">
+              <h1 className="text-4xl font-bold text-gray-100 mb-2">Shopping Cart</h1>
+              <p className="text-gray-300">
                 {cartItems.length} {cartItems.length === 1 ? 'item' : 'items'} in your cart
               </p>
             </div>
@@ -109,16 +107,16 @@ export default function CartPage() {
 
                         {/* Tool Info */}
                         <div className="flex-grow">
-                          <h3 className="text-xl font-bold text-dark mb-1">{item.name}</h3>
+                          <h3 className="text-xl font-bold text-gray-100 mb-1">{item.name}</h3>
                           <div className="flex items-center space-x-4 mb-2">
-                            <span className="text-sm bg-secondary/30 px-3 py-1 rounded-full text-dark">
+                            <span className="text-sm bg-gray-600 px-3 py-1 rounded-full text-gray-200">
                               {item.category}
                             </span>
-                            <span className="text-sm text-dark/70">
+                            <span className="text-sm text-gray-300">
                               Duration: {item.duration}
                             </span>
                             {item.discount > 0 && (
-                              <span className="text-sm bg-green-100 text-green-700 px-2 py-1 rounded-full">
+                              <span className="text-sm bg-green-600 text-green-100 px-2 py-1 rounded-full">
                                 {item.discount}% OFF
                               </span>
                             )}
@@ -132,16 +130,16 @@ export default function CartPage() {
                         <div className="flex items-center space-x-3">
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-gray-200 transition-colors"
+                            className="w-8 h-8 bg-gray-600 text-gray-200 rounded-lg flex items-center justify-center hover:bg-gray-500 transition-colors"
                           >
                             -
                           </button>
-                          <span className="text-lg font-semibold text-dark w-8 text-center">
+                          <span className="text-lg font-semibold text-gray-100 w-8 text-center">
                             {item.quantity}
                           </span>
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-gray-200 transition-colors"
+                            className="w-8 h-8 bg-gray-600 text-gray-200 rounded-lg flex items-center justify-center hover:bg-gray-500 transition-colors"
                           >
                             +
                           </button>
@@ -177,12 +175,12 @@ export default function CartPage() {
 
               {/* Order Summary */}
               <div className="lg:col-span-1">
-                <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl sticky top-24">
-                  <h2 className="text-2xl font-bold text-dark mb-6">Order Summary</h2>
+                <div className="bg-gray-800/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl sticky top-24 border border-gray-700">
+                  <h2 className="text-2xl font-bold text-gray-100 mb-6">Order Summary</h2>
 
                   {/* Promo Code */}
                   <div className="mb-6">
-                    <label className="block text-sm font-semibold text-dark mb-2">
+                    <label className="block text-sm font-semibold text-gray-200 mb-2">
                       Promo Code
                     </label>
                     <div className="flex space-x-2">
@@ -191,13 +189,13 @@ export default function CartPage() {
                         value={promoCode}
                         onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
                         placeholder="Enter code"
-                        className="flex-1 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-accent"
+                        className="flex-1 px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-accent text-gray-100 placeholder-gray-400"
                       />
                       <Button variant="secondary" size="sm" onClick={applyPromoCode}>
                         Apply
                       </Button>
                     </div>
-                    <div className="mt-2 text-xs text-dark/60">
+                    <div className="mt-2 text-xs text-gray-400">
                       Try: SAVE10, FIRST20, STUDENT15
                     </div>
                   </div>
@@ -205,26 +203,26 @@ export default function CartPage() {
                   {/* Price Breakdown */}
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between">
-                      <span className="text-dark/70">Subtotal</span>
-                      <span className="text-dark">₹{subtotal.toFixed(2)}</span>
+                      <span className="text-gray-300">Subtotal</span>
+                      <span className="text-gray-100">₹{subtotal.toFixed(2)}</span>
                     </div>
 
                     {promoDiscount > 0 && (
-                      <div className="flex justify-between text-green-600">
+                      <div className="flex justify-between text-green-400">
                         <span>Promo Discount ({promoDiscount}%)</span>
                         <span>-₹{promoDiscountAmount.toFixed(2)}</span>
                       </div>
                     )}
 
                     <div className="flex justify-between">
-                      <span className="text-dark/70">GST (18%)</span>
-                      <span className="text-dark">₹{tax.toFixed(2)}</span>
+                      <span className="text-gray-300">GST (18%)</span>
+                      <span className="text-gray-100">₹{tax.toFixed(2)}</span>
                     </div>
 
-                    <hr className="border-dark/20" />
+                    <hr className="border-gray-600" />
 
                     <div className="flex justify-between text-lg font-bold">
-                      <span className="text-dark">Total</span>
+                      <span className="text-gray-100">Total</span>
                       <span className="text-accent">₹{total.toFixed(2)}</span>
                     </div>
                   </div>
@@ -238,12 +236,24 @@ export default function CartPage() {
                       </h3>
                       <PayPalButton
                         amount={total}
-                        onSuccess={() => {
-                          alert('Payment successful! Your software access will be activated shortly.');
+                        toolName={cartItems.map(item => item.name).join(', ')}
+                        quantity={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                        duration={cartItems.map(item => item.duration).join(', ')}
+                        onSuccess={(paymentData) => {
+                          alert(`Payment successful! Payment ID: ${paymentData?.id}. Your software access will be activated shortly.`);
+                          clearCart(); // Clear cart after successful payment
                         }}
                         onError={(error) => {
                           console.error('PayPal payment error:', error);
-                          alert('Payment failed. Please try again.');
+                          let errorMessage = 'Payment failed. Please try again.';
+                          
+                          if (error instanceof Error) {
+                            errorMessage = `Payment failed: ${error.message}`;
+                          } else if (typeof error === 'string') {
+                            errorMessage = `Payment failed: ${error}`;
+                          }
+                          
+                          alert(errorMessage);
                         }}
                       />
                     </div>
@@ -266,19 +276,19 @@ export default function CartPage() {
 
                   {/* Security & Guarantees */}
                   <div className="space-y-3 text-sm">
-                    <div className="flex items-center text-dark/70">
+                    <div className="flex items-center text-gray-300">
                       <span className="mr-2">🔒</span>
                       <span>Secure payment processing</span>
                     </div>
-                    <div className="flex items-center text-dark/70">
+                    <div className="flex items-center text-gray-300">
                       <span className="mr-2">⚡</span>
                       <span>Instant access after payment</span>
                     </div>
-                    <div className="flex items-center text-dark/70">
+                    <div className="flex items-center text-gray-300">
                       <span className="mr-2">💰</span>
                       <span>Money-back guarantee</span>
                     </div>
-                    <div className="flex items-center text-dark/70">
+                    <div className="flex items-center text-gray-300">
                       <span className="mr-2">🎧</span>
                       <span>24/7 customer support</span>
                     </div>
@@ -289,8 +299,6 @@ export default function CartPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

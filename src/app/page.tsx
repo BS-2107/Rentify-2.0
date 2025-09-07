@@ -3,11 +3,10 @@ import { Hero } from '../../components/sections/Hero';
 import { HowItWorks } from '../../components/sections/HowItWorks';
 import { Security } from '../../components/sections/Security';
 import { AntiPiracy } from '../../components/sections/AntiPiracy';
-import { Footer } from '../../components/layout/Footer';
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gray-900">
       <Header />
       <main>
         <Hero />
@@ -15,7 +14,6 @@ export default function Home() {
         <Security />
         <AntiPiracy />
       </main>
-      <Footer />
     </div>
   );
 }

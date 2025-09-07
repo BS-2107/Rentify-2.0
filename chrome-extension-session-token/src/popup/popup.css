@@ -113,6 +113,16 @@ body {
   box-shadow: 0 4px 12px rgba(162, 178, 159, 0.3);
 }
 
+.btn-vm {
+  background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+  color: white;
+}
+
+.btn-vm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
 .btn-secondary {
   background: rgba(255, 255, 255, 0.9);
   color: #798777;
